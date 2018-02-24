@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { func, arrayOf, string, object, objectOf } from 'prop-types'
-import _ from 'lodash'
 import { Radio, Button, List, Avatar } from 'antd'
 import moment from 'moment'
-import { withProduct } from '../redux'  
+import { withProduct, selectProductWithKey } from '../redux'  
 import { LinkConfirm, Loading } from '../../../components'
 
 const GITHUB_NAME = 'Weerapat1993'
@@ -23,26 +22,13 @@ class ProfilePage extends Component {
     super()
 
     this.state = {
-      githubUser: 'Weerapat1993',
+      githubUser: GITHUB_NAME,
     }
 
     this.handleGithubProfile = this.handleGithubProfile.bind(this)
   }
   componentDidMount() {
     this.reloadData()
-  }
-
-  getProfile() {
-    const { githubUser } = this.state
-    const { keys } = this.props
-    const defaultState = {
-      isFetching: false,
-      isReload: true,
-      data: [],
-      error: '',
-    }
-    const profile = _.get(keys, githubUser) || defaultState
-    return profile
   }
 
   githubProfile(select) {
@@ -57,7 +43,8 @@ class ProfilePage extends Component {
 
   reloadData() {
     const { githubUser } = this.state
-    const profile = this.getProfile()
+    const { keys } = this.props
+    const profile = selectProductWithKey(githubUser, keys)
     if(profile.isReload) {
       this.props.fetchProductList(githubUser)
     }
@@ -72,10 +59,10 @@ class ProfilePage extends Component {
 
   render() {
     const { githubUser } = this.state
-    const { byID, fetchProductList } = this.props
-    const profile = this.getProfile()
+    const { byID, fetchProductList, keys } = this.props
+    const profile = selectProductWithKey(githubUser, keys)
     const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
-    const Link = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
+    const Linker = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
     return (
       <div>
         <h1>Github Profile</h1>
@@ -107,7 +94,7 @@ class ProfilePage extends Component {
               <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src={item.owner.avatar_url} />}
-                  title={<Link item={item} />}
+                  title={<Linker item={item} />}
                   description={item.description}
                 />
                 <div>{moment(item.updated_at, "YYYYMMDD").fromNow()}</div>
