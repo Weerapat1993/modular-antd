@@ -11,7 +11,6 @@ const GITHUB_NAME = 'Weerapat1993'
 class ProfilePage extends Component {
   static propTypes = {
     fetchProductList: func.isRequired,
-    handleGithubProfile: func.isRequired,
     keys: objectOf(object),
     byID: arrayOf(string).isRequired,
   }
@@ -73,7 +72,7 @@ class ProfilePage extends Component {
 
   render() {
     const { githubUser } = this.state
-    const { byID } = this.props
+    const { byID, fetchProductList } = this.props
     const profile = this.getProfile()
     const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
     const Link = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
@@ -99,7 +98,7 @@ class ProfilePage extends Component {
         <Loading 
           isLoading={profile.isFetching}
           error={profile.error}
-          onReload={() => this.props.handleGithubProfile(githubUser)}
+          onReload={() => fetchProductList(githubUser)}
         >
           <List
             itemLayout="horizontal"

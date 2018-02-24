@@ -3,7 +3,7 @@ import withSizes from 'react-sizes'
 import _ from 'lodash'
 import Case from 'case'
 import { Link } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
+import { Layout, Menu, Breadcrumb, Icon, BackTop } from 'antd'
 import './styles.css'
 import styles from './styles'
 
@@ -67,6 +67,7 @@ const Layouts = props => {
         <div style={contentStyle}>
           {children}
         </div>
+        <BackTop />
       </Content>
       <Footer className='text-center'>
         Ant Design ©2016 Created by Ant UED
