@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col, Spin, Button } from 'antd'
+import { Row, Col, Button, Icon } from 'antd'
 import { modalError } from '../ModalError'
+import styles from './styles'
 
 class Loading extends Component {
   componentWillReceiveProps(nextProps) {
@@ -16,15 +17,23 @@ class Loading extends Component {
     return isLoading ? (
       <Row>
         <Col span={24} className='text-center'>
-          <Spin size="large" />
-          <h2>Loading</h2>
+          <Icon type='loading' style={styles.loadingIcon} />
+          <div style={styles.loadingText}>Loading . . .</div>
         </Col>
       </Row>
     ) : (
       !error ? children : (
-        <div className='text-center'>
-          <h3>{error}</h3>
-          { onReload ? <Button onClick={onReload}>Reload</Button> : null }
+        <div style={styles.errorContent}>
+          <Icon type="close-circle" style={styles.errorIcon} />
+          <div style={styles.errorHeader}>
+            Oh Snap!
+          </div> 
+          <p style={styles.errorText}>
+            <div>Something went wrong!</div>
+            <div>Please try again.</div>
+          </p>
+          { onReload ? <Button type='primary' size='large' onClick={onReload}>Try Again!</Button> : null }
+          {/* <div style={styles.errorHeader}>{error}</div> */}
         </div>
       )
     )

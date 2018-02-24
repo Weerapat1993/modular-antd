@@ -15,7 +15,7 @@ const sideMenu = [
 ]
 
 const Layouts = props => {
-  const { children, location, history, dimenstion, isMobile } = props
+  const { children, location, history, dimenstion, isDesktop } = props
   const onMenuKey = ({ key, keyPath }) => {
     const route = {
       pathname: key,
@@ -36,7 +36,7 @@ const Layouts = props => {
   return (
     <Layout>
       <Header style={styles.headerStyle}>
-        { !isMobile && <div className="logo">Weerapat1993</div> }
+        { isDesktop && <div className="logo" /> }
         <Menu
           theme="dark"
           mode="horizontal"
@@ -76,7 +76,7 @@ const Layouts = props => {
 }
 
 const mapSizesToProps = ({ width, height }) => ({
-  isMobile: width < 768,
+  isDesktop: width > 1024,
   dimenstion: {
     width, 
     height,

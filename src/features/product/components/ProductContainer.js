@@ -80,6 +80,15 @@ class ProfilePage extends Component {
     return (
       <div>
         <h1>Github Profile</h1>
+        <div>
+          <Button.Group>
+            {
+              byID.map((item) => (
+                <Button type='primary' onClick={() => this.githubProfile(item)} key={item}>{item}</Button>
+              ))
+            }
+          </Button.Group>
+        </div>
         <Radio.Group onChange={this.handleGithubProfile} defaultValue={githubUser}>
           {
             btnGroups.map((item) => (
@@ -87,14 +96,6 @@ class ProfilePage extends Component {
             ))
           }
         </Radio.Group>
-        <h5>History</h5>
-        <Button.Group>
-          {
-            byID.map((item) => (
-              <Button type='primary' onClick={() => this.githubProfile(item)} key={item}>{item}</Button>
-            ))
-          }
-        </Button.Group>
         <Loading 
           isLoading={profile.isFetching}
           error={profile.error}
