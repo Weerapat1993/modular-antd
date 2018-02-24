@@ -1,3 +1,7 @@
-import ArticlePage from './ArticlePage'
+import ArticleHome from './ArticlePage'
+import ArticleCreate from './ArticleCreate'
 
-export default ArticlePage
+export default {
+  Home: ArticleHome,
+  Create: ArticleCreate,
+}
