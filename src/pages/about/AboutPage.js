@@ -1,4 +1,5 @@
 import React from 'react'
+import Case from 'case'
 import { FolderStructure, App } from '../../components'
 
 const index = 'index.js'
@@ -28,9 +29,19 @@ const redux = (name) => [
   `${name}Utils.js`,
 ]
 
-// const constants = [
-//   'endpoint.js',
-// ]
+const pages = (name) => [
+  `${Case.pascal(name)}Page.js`,
+  index
+]
+
+const features = (name) => ({
+  components: [
+    `${Case.pascal(name)}Container.js`,
+    index
+  ],
+  redux: redux(Case.camel(name)),
+  [index]: index
+})
 
 const language =  [
   'common.js',
@@ -72,18 +83,18 @@ const myProjectStructure = {
       ],
       [index]: index,
     },
+    pages: {
+      home: pages('home'),
+      about: pages('about'),
+      [index]: index
+    },
     config,
     utils,
     lang: language,
     features: {
-      product: {
-        components: [
-          'ProductContainer.js',
-          index
-        ],
-        redux: redux('product'),
-        [index]: index
-      },
+      product: features('product'),
+      shop: features('shop'),
+      cart: features('cart'),
       'reducers.js': 'reducers.js',
       [index]: index,
     },
@@ -91,40 +102,8 @@ const myProjectStructure = {
   },
   '.gitignore': '.gitignore',
   'package.json': 'package.json',
+  'README.md': 'README.md',
 }
-
-// Modular Structure
-// const modularStructure = {
-//   pubilc: [
-//     'index.html'
-//   ],
-//   src: {
-//     constants,
-//     utils,
-//     language,
-//     config: [
-//       'endpoint.js',
-//       'api.js',
-//     ],
-//     common: {
-//       Layouts: [
-//         'Layouts.js',
-//         index
-//       ],
-//       [index]: index
-//     },
-//     features: {
-//       product: [
-//         index
-//       ],
-//       [index]: index,
-//     },
-//     [index]: index,
-//   },
-//   '.babelrc': '.babelrc',
-//   '.gitignore': '.gitignore',
-//   'package.json': 'package.json',
-// }
 
 const AbotPage = (props) => (
   <App {...props}>
