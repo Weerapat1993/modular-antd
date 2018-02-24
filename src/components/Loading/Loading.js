@@ -28,10 +28,10 @@ class Loading extends Component {
           <div style={styles.errorHeader}>
             Oh Snap!
           </div> 
-          <p style={styles.errorText}>
+          <div style={styles.errorText}>
             <div>Something went wrong!</div>
             <div>Please try again.</div>
-          </p>
+          </div>
           { onReload ? <Button type='primary' size='large' onClick={onReload}>Try Again!</Button> : null }
           {/* <div style={styles.errorHeader}>{error}</div> */}
         </div>

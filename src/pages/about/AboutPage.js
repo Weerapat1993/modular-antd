@@ -1,6 +1,6 @@
 import React from 'react'
 import Case from 'case'
-import { FolderStructure, App } from '../../components'
+import { FolderStructure } from '../../components'
 
 const index = 'index.js'
 
@@ -105,11 +105,11 @@ const myProjectStructure = {
   'README.md': 'README.md',
 }
 
-const AbotPage = (props) => (
-  <App {...props}>
+const AbotPage = () => (
+  <div>
     <h3>My Project Folder Structure</h3>
     <FolderStructure data={myProjectStructure} />
-  </App>
+  </div>
 )
 
 export default AbotPage

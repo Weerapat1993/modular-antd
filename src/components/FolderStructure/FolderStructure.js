@@ -1,5 +1,5 @@
 import React from 'react'
-import { any, arrayOf, shape } from 'prop-types'
+import { any, arrayOf } from 'prop-types'
 import _ from 'lodash'
 import { Tree } from 'antd'
 
@@ -87,12 +87,10 @@ const FolderStructure = ({ data, defaultExpandedKeys }) => {
 }
 
 FolderStructure.propTypes = {
-  data: shape(any),
   defaultExpandedKeys: arrayOf(any)
 }
 
 FolderStructure.defaultProps = {
-  data: {},
   defaultExpandedKeys: []
 }
 

@@ -31,6 +31,7 @@ const styles = {
   errorText: {
     color: '#999',
     fontSize: 20,
+    margin: 15,
   }
 }
 

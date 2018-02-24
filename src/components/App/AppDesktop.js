@@ -1,21 +1,17 @@
 import React from 'react'
-import withSizes from 'react-sizes'
 import _ from 'lodash'
 import Case from 'case'
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon, BackTop } from 'antd'
+import Routes from '../../routes'
 import './styles.css'
 import styles from './styles'
+import { menuBar } from '../../config'
 
 const { Header, Content, Footer } = Layout
 
-const sideMenu = [
-  { path: '/', icon: 'home', title: 'Home' },
-  { path: '/about', icon: 'book', title: 'About' },
-]
-
 const Layouts = props => {
-  const { children, location, history, dimenstion, isDesktop } = props
+  const { location, history, dimenstion } = props
   const onMenuKey = ({ key, keyPath }) => {
     const route = {
       pathname: key,
@@ -36,7 +32,7 @@ const Layouts = props => {
   return (
     <Layout>
       <Header style={styles.headerStyle}>
-        { isDesktop && <div className="logo" /> }
+        <div className="logo" />
         <Menu
           theme="dark"
           mode="horizontal"
@@ -46,7 +42,7 @@ const Layouts = props => {
           style={styles.menuStyle}
         >
           {
-            sideMenu.map(item => (
+            menuBar.map(item => (
               <Menu.Item key={item.path}  >
                 <Icon type={item.icon} />
                 <span>{item.title}</span>
@@ -65,7 +61,7 @@ const Layouts = props => {
           }
         </Breadcrumb>
         <div style={contentStyle}>
-          {children}
+          <Routes />
         </div>
         <BackTop />
       </Content>
@@ -76,12 +72,4 @@ const Layouts = props => {
   )
 }
 
-const mapSizesToProps = ({ width, height }) => ({
-  isDesktop: width > 1024,
-  dimenstion: {
-    width, 
-    height,
-  }
-})
-
-export default withSizes(mapSizesToProps)(Layouts)
+export default Layouts
