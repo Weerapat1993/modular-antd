@@ -49,11 +49,11 @@ class ArticleController extends Component {
               return (
                 <List.Item>
                   <List.Item.Meta
-                    avatar={<Avatar src={''} />}
+                    avatar={<Avatar />}
                     title={<Link to={`/article/${key}`}>{item.title}</Link>}
                     description={item.title}
                   />
-                  <div>{moment(item.updated_at, "YYYYMMDD").fromNow()}</div>
+                  <div>{moment(item.updated_at).fromNow()}</div>
                 </List.Item>
               )
             }}

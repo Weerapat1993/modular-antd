@@ -11,6 +11,14 @@ export const asyncActionType = (type) => ({
   FAILURE: type+'_FAILURE',
 })
 
+export const crudActionType = (name) => ({
+  LIST: asyncActionType(`${name}_LIST`),
+  DETAIL: asyncActionType(`${name}_DETAIL`),
+  CREATE: asyncActionType(`${name}_CREATE`),
+  UPDATE: asyncActionType(`${name}_UPDATE`),
+  DELETE: asyncActionType(`${name}_DELETE`),
+})
+
 export class AsyncActions {
   /**
    * Async Actions Creator

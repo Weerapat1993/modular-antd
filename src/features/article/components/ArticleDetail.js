@@ -7,9 +7,7 @@ import { withArticleByID, selectArticleWithKey } from '../redux';
 class ArticleDetail extends Component {
   static propTypes = {
     fetchArticleDetail: func.isRequired,
-    match: shape({
-      params: object,
-    }).isRequired,
+    match: shape({ params: object }).isRequired,
     byID: arrayOf(any).isRequired,
     keys: objectOf(any).isRequired,
   }

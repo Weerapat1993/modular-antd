@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withSizes } from 'react-sizes'
 import moment from 'moment';
-// import PropTypes from 'prop-types';
+import { func, shape, bool, array } from 'prop-types';
 import Markdown from 'react-remarkable';
 import { Form, Input, Button, List, Avatar, Icon } from 'antd';
 import { withArticlePost } from '../redux'
@@ -28,11 +28,27 @@ const userExample = [
 ]
 
 class DynamicRule extends Component {
-  state = {
-    isPreview: false,
-    title: '',
-    description: ''
-  };
+  static propTypes = {
+    createArticle: func.isRequired,
+    article: shape({ byID: array }).isRequired,
+    form: shape({ getFieldDecorator: func.isRequired }).isRequired,
+    history: shape({ push: func }).isRequired,
+    isMobile: bool.isRequired
+  }
+
+  constructor() {
+    super()
+
+    this.state = {
+      isPreview: false,
+      title: '',
+      description: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleTitle = this.handleTitle.bind(this)
+    this.handleDescription = this.handleDescription.bind(this)
+    this.handlePreview = this.handlePreview.bind(this)
+  }
 
   componentWillReceiveProps(nextProps) {
     const { article, history } = this.props
@@ -42,7 +58,7 @@ class DynamicRule extends Component {
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit(e) {
     e.preventDefault();
     const { form } = this.props
     form.validateFields((err, values) => {
@@ -52,15 +68,15 @@ class DynamicRule extends Component {
     });
   }
 
-  handleTitle = (e) => {
+  handleTitle(e) {
     this.setState({ title: e.target.value })
   }
 
-  handleDescription = (e) => {
+  handleDescription(e) {
     this.setState({ description: e.target.value })
   }
 
-  handlePreview = () => {
+  handlePreview() {
     const { isPreview } = this.state
     this.setState({ isPreview: !isPreview })
   }
