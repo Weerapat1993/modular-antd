@@ -5,12 +5,12 @@ import {
   formCreateArticle,
   formUpdateArticle,
 } from './articleActions'
-import { store } from '../../reducers';
+import { Article } from './articleReducer'
 
 export const withArticle = (WrapperComponent) => (
   connect(
     (state) => ({
-      article: store(state).article,
+      article: Article(state),
     }),
     {
       fetchArticleList,
@@ -21,8 +21,8 @@ export const withArticle = (WrapperComponent) => (
 export const withArticleByID = (WrapperComponent) => (
   connect(
     (state) => ({
-      keys: store(state).article.keys,
-      byID: store(state).article.byID,
+      keys: Article(state).keys,
+      byID: Article(state).byID,
     }),
     {
       fetchArticleDetail,
@@ -33,7 +33,7 @@ export const withArticleByID = (WrapperComponent) => (
 export const withArticlePost = (WrapperComponent) => (
   connect(
     (state) => ({
-      article: store(state).article,
+      article: Article(state),
     }),
     {
       formCreateArticle,

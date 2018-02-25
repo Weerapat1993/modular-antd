@@ -144,10 +144,6 @@ export class FullStackReducer {
     return this.setState({
       byID: byID.filter(item => item === key).length ? byID : byID.concat([key]),
       keys,
-      data: [
-        ...this.state.data,
-        data.data,
-      ]
     })
   }
 

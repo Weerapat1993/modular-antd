@@ -6,7 +6,12 @@ export const initialState = {
   keys: {},
 }
 
-/** @type {initialState} */
+/**
+ * 
+ * @param {initialState} state 
+ * @param {*} action
+ * @return {initialState}
+ */
 export const productReducer = (state = initialState, action) => {
   const reducer = new NormalizeReducer(state, action)
   switch(action.type) {
@@ -20,3 +25,10 @@ export const productReducer = (state = initialState, action) => {
       return state
   }
 }
+
+/**
+ * Product Model
+ * @param {Object} state
+ * @return {initialState}
+ */
+export const Product = (state) => state.product
