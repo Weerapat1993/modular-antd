@@ -47,7 +47,7 @@ Loading.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.node,
-  ]).isRequired
+  ])
 }
 
 Loading.defaultProps = {

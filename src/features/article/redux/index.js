@@ -1,3 +1,4 @@
 export { articleReducer } from './articleReducer'
-export { withArticle } from './articleConnector'
+export { withArticle, withArticleByID, withArticlePost } from './articleConnector'
 export { fetchArticleList } from './articleActions'
+export { selectArticleWithKey } from './articleSelector'

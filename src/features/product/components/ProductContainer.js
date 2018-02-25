@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { func, arrayOf, string, object, objectOf } from 'prop-types'
-import { Radio, Button, List, Card } from 'antd'
+import { Radio, Button, List, Avatar } from 'antd'
 import moment from 'moment'
 import { withProduct, selectProductWithKey } from '../redux'  
 import { LinkConfirm, Loading } from '../../../components'
 
 const GITHUB_NAME = 'Weerapat1993'
-const { Meta } = Card
+// const { Meta } = Card
 
 class ProfilePage extends Component {
   static propTypes = {
@@ -63,7 +63,7 @@ class ProfilePage extends Component {
     const { byID, fetchProductList, keys } = this.props
     const profile = selectProductWithKey(githubUser, keys)
     const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
-    // const Linker = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
+    const Linker = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
     return (
       <div>
         <h1>Github Profile</h1>
@@ -88,7 +88,7 @@ class ProfilePage extends Component {
           error={profile.error}
           onReload={() => fetchProductList(githubUser)}
         >
-          <List
+          {/* <List
             grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 6, xxl: 6 }}
             dataSource={profile.data}
             renderItem={item => (
@@ -106,8 +106,8 @@ class ProfilePage extends Component {
                 </Card>
               </List.Item>
             )}
-          />
-          {/* <List
+          /> */}
+          <List
             itemLayout="horizontal"
             dataSource={profile.data}
             renderItem={item => (
@@ -120,7 +120,7 @@ class ProfilePage extends Component {
                 <div>{moment(item.updated_at, "YYYYMMDD").fromNow()}</div>
               </List.Item>
             )}
-          /> */}
+          />
         </Loading>
       </div>
     )

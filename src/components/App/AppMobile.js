@@ -102,7 +102,11 @@ class Layouts extends React.Component {
               <Breadcrumb.Item><Icon type="home" /> <Link to='/'>Home</Link></Breadcrumb.Item>
               {
                 breadcrumbs.map((item, i) => (
-                  <Breadcrumb.Item key={i}>{Case.capital(item)}</Breadcrumb.Item>
+                  (i !== breadcrumbs.length - 1) ? (
+                    <Breadcrumb.Item key={item}><Link to={`/${item}`}>{Case.capital(item)}</Link></Breadcrumb.Item>
+                  ) : (
+                    <Breadcrumb.Item key={item}>{Case.capital(item)}</Breadcrumb.Item>
+                  )
                 ))
               }
             </Breadcrumb>

@@ -10,11 +10,13 @@ const GET_REQUEST = {
 const GET_SUCCESS = {
   isFetching: false,
   error: '',
+  isReload: false
 }
 
 const GET_FAILURE = (action) => ({
   isFetching: false,
-  error: _.get(action.error, 'response.data.message') || action.error.message
+  error: _.get(action.error, 'response.data.message') || action.error.message,
+  isReload: false,
 })
 
 /**
@@ -142,6 +144,10 @@ export class FullStackReducer {
     return this.setState({
       byID: byID.filter(item => item === key).length ? byID : byID.concat([key]),
       keys,
+      data: [
+        ...this.state.data,
+        data.data,
+      ]
     })
   }
 

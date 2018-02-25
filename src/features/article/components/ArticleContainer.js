@@ -21,16 +21,21 @@ class ArticleController extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchArticleList()
+    const { article } = this.props
+    if(article.isReload) {
+      this.props.fetchArticleList()
+    }
   }
 
   render() {
     const { article, fetchArticleList } = this.props
+
     return (
       <div>
         <Link to='/article/create'>
           <Button type='primary'>Create Article</Button>
         </Link>
+        <h1>Articles</h1>
         <Loading
           isLoading={article.isFetching}
           error={article.error}
@@ -38,17 +43,20 @@ class ArticleController extends Component {
         >
           <List
             itemLayout="horizontal"
-            dataSource={article.data}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta
-                  avatar={<Avatar src={''} />}
-                  title={item.title}
-                  description={item.description}
-                />
-                <div>{moment(item.updated_at, "YYYYMMDD").fromNow()}</div>
-              </List.Item>
-            )}
+            dataSource={article.byID}
+            renderItem={key => {
+              const item = article.keys[key].data
+              return (
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={<Avatar src={''} />}
+                    title={<Link to={`/article/${key}`}>{item.title}</Link>}
+                    description={item.title}
+                  />
+                  <div>{moment(item.updated_at, "YYYYMMDD").fromNow()}</div>
+                </List.Item>
+              )
+            }}
           />
         </Loading>
       </div>

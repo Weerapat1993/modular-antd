@@ -1,9 +1,5 @@
-// import { asyncActionType } from '../../../utils'
-
-export const asyncActionType = (type) => ({
-  REQUEST: type+'_REQUEST',
-  SUCCESS: type+'_SUCCESS',
-  FAILURE: type+'_FAILURE',
-})
+import { asyncActionType } from '../../../utils'
 
 export const FETCH_ARTICLE_LIST = asyncActionType('FETCH_ARTICLE_LIST')
+export const FETCH_ARTICLE_DEATIL = asyncActionType('FETCH_ARTICLE_DETAIL')
+export const CREATE_ARTICLE = asyncActionType('CREATE_ARTICLE')

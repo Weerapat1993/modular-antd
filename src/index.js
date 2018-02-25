@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { HashRouter as Router, Route } from 'react-router-dom'
-// import Routes from './routes'
 import { App } from './components'
 import configureStore from './config/store'
 // import registerServiceWorker from './registerServiceWorker';
+import './styles/github-markdown.css'
 
 const Index = () => (
   <Provider store={configureStore()}>

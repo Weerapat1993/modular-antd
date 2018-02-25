@@ -1,28 +1,44 @@
-import { Reducer } from '../../../utils'
-import { FETCH_ARTICLE_LIST } from './articleActionTypes'
+import { FullStackReducer } from '../../../utils'
+import { FETCH_ARTICLE_LIST, FETCH_ARTICLE_DEATIL, CREATE_ARTICLE } from './articleActionTypes'
+import { setNormalize } from './articleUtils'
 
 export const initialState = {
   isFetching: false,
   isReload: true,
   data: [],
   error: '',
+  keys: {},
+  byID: [], 
 }
 
 /**
  * Article Reducer
- * @param {initialState} state 
- * @param {*} action
- * @return {initialState} 
+ * @type {initialState} 
  */
 export const articleReducer = (state = initialState, action) => {
-  const reducer = new Reducer(state, action)
+  const reducer = new FullStackReducer(state, action)
   const { type, data } = action
   switch(type) {
     case FETCH_ARTICLE_LIST.REQUEST:
       return reducer.getRequest()
     case FETCH_ARTICLE_LIST.SUCCESS:
-      return reducer.getSuccess({ data })
+      return reducer.getSuccess({
+        keys: setNormalize(data, 'id'),
+        byID: data.map(item => item.id),
+      })
     case FETCH_ARTICLE_LIST.FAILURE:
+      return reducer.getFailure()
+    case FETCH_ARTICLE_DEATIL.REQUEST:
+      return reducer.getRequestWithKey()
+    case FETCH_ARTICLE_DEATIL.SUCCESS:
+      return reducer.getSuccessWithKey({ data })
+    case FETCH_ARTICLE_DEATIL.FAILURE:
+      return reducer.getFailureWithKey()
+    case CREATE_ARTICLE.REQUEST:
+      return state
+    case CREATE_ARTICLE.SUCCESS:
+      return reducer.getSuccessWithKey({ data })
+    case CREATE_ARTICLE.FAILURE:
       return reducer.getFailure()
     default:
       return state

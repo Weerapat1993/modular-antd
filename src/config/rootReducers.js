@@ -1,10 +1,4 @@
 import { combineReducers } from 'redux'
-import { reducer as formReducer } from 'redux-form'
-import { productReducer } from '../features/product'
-import { articleReducer } from '../features/article'
+import rootReducers from '../features/reducers'
 
-export default combineReducers({
-  form: formReducer,
-  product: productReducer,
-  article: articleReducer,
-})
+export default combineReducers(rootReducers)

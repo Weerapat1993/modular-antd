@@ -55,8 +55,12 @@ const Layouts = props => {
         <Breadcrumb style={styles.breedcrumbStyle}>
           <Breadcrumb.Item><Icon type="home" /> <Link to='/'>Home</Link></Breadcrumb.Item>
           {
-            breadcrumbs.map((item) => (
-              <Breadcrumb.Item key={item}>{Case.capital(item)}</Breadcrumb.Item>
+            breadcrumbs.map((item, i) => (
+              (i !== breadcrumbs.length - 1) ? (
+                <Breadcrumb.Item key={item}><Link to={`/${item}`}>{Case.capital(item)}</Link></Breadcrumb.Item>
+              ) : (
+                <Breadcrumb.Item key={item}>{Case.capital(item)}</Breadcrumb.Item>
+              )
             ))
           }
         </Breadcrumb>
