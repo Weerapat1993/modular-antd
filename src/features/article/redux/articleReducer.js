@@ -40,6 +40,12 @@ export const articleReducer = (state = initialState, action) => {
       return reducer.getSuccessWithKey({ data })
     case ARTICLE.CREATE.FAILURE:
       return reducer.getFailure()
+    case ARTICLE.UPDATE.REQUEST:
+      return reducer.getRequestWithKey()
+    case ARTICLE.UPDATE.SUCCESS:
+      return reducer.getSuccessWithKey({ data })
+    case ARTICLE.UPDATE.FAILURE:
+      return reducer.getFailureWithKey()
     default:
       return state
   }

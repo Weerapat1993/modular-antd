@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withSizes } from 'react-sizes'
-import { func, shape, bool, array } from 'prop-types';
+import { func, shape, bool, array, string, oneOf } from 'prop-types';
 import Markdown from 'react-remarkable';
 import { Form, Input, Button, Icon } from 'antd';
 import { withArticlePost } from '../redux'
@@ -19,20 +19,35 @@ const text = {
 
 class DynamicRule extends Component {
   static propTypes = {
-    createArticle: func.isRequired,
+    formCreateArticle: func.isRequired,
+    formUpdateArticle: func.isRequired,
     article: shape({ byID: array }).isRequired,
     form: shape({ getFieldDecorator: func.isRequired }).isRequired,
     history: shape({ push: func }).isRequired,
-    isMobile: bool.isRequired
+    isMobile: bool.isRequired,
+    dataForm: shape({
+      title: string,
+      description: string,
+    }),
+    method: oneOf(['PUT', 'POST']).isRequired
   }
 
-  constructor() {
-    super()
+  static defaultProps = {
+    dataForm: {
+      id: 0,
+      title: '',
+      description: '',
+    }
+  }
 
+  constructor(props) {
+    super(props)
+
+    const { title, description } = props.dataForm
     this.state = {
       isPreview: false,
-      title: '',
-      description: ''
+      title,
+      description,
     };
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTitle = this.handleTitle.bind(this)
@@ -50,10 +65,19 @@ class DynamicRule extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { form } = this.props
+    const { form, method, history, dataForm } = this.props
     form.validateFields((err, values) => {
       if (!err) {
-        this.props.createArticle(values)
+        if(method === 'PUT') {
+          const newValue = {
+            id: dataForm.id,
+            ...values,
+          }
+          this.props.formUpdateArticle(newValue, method)
+          history.push(`/article/${dataForm.id}`)
+        } else {
+          this.props.formCreateArticle(values, method)
+        }
       }
     });
   }
@@ -74,7 +98,7 @@ class DynamicRule extends Component {
   render() {
     const { isMobile } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { description, title, isPreview } = this.state
+    const { description, title, isPreview, } = this.state
     return (
       <Form onSubmit={this.handleSubmit}>
         <UserHeader>

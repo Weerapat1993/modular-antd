@@ -1,9 +1,9 @@
 import ArticleContainer from './ArticleContainer'
-import ArticleCreateForm from './ArticleCreateContainer'
+import ArticleForm from './ArticleForm'
 import ArticleDetail from './ArticleDetail'
 
 export {
   ArticleContainer,
-  ArticleCreateForm,
+  ArticleForm,
   ArticleDetail,
 }

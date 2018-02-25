@@ -31,19 +31,34 @@ export const fetchArticleDetail = (key) => (dispatch) => {
     .catch(error => dispatch(fetchArticleDetailFailure(error, key)))
 }
 
-export const createArticleRequest = (key) => ({ type: ARTICLE.CREATE.REQUEST, key }) 
-export const createArticleSuccess = (data, key) => ({ type: ARTICLE.CREATE.SUCCESS, data, key }) 
-export const createArticleFailure = (error, key) => ({ type: ARTICLE.CREATE.FAILURE, error, key }) 
-export const createArticle = (data) => (dispatch) => {
-  dispatch(createArticleRequest())
+export const formCreateArticleRequest = (key) => ({ type: ARTICLE.CREATE.REQUEST, key }) 
+export const formCreateArticleSuccess = (data, key) => ({ type: ARTICLE.CREATE.SUCCESS, data, key }) 
+export const formCreateArticleFailure = (error, key) => ({ type: ARTICLE.CREATE.FAILURE, error, key }) 
+export const formCreateArticle = (data) => (dispatch) => {
+  dispatch(formCreateArticleRequest())
   return axios({
     method: 'POST',
     responseType: 'json',
     url: API_ENDPOINT_ARTICLE_LIST(),
     data,
   })
-    .then(res => dispatch(createArticleSuccess(res.data.data, res.data.data.id)))
-    .catch(error => dispatch(createArticleFailure(error)))
+    .then(res => dispatch(formCreateArticleSuccess(res.data.data, res.data.data.id)))
+    .catch(error => dispatch(formCreateArticleFailure(error)))
+}
+
+export const formUpdateArticleRequest = (key) => ({ type: ARTICLE.UPDATE.REQUEST, key }) 
+export const formUpdateArticleSuccess = (data, key) => ({ type: ARTICLE.UPDATE.SUCCESS, data, key }) 
+export const formUpdateArticleFailure = (error, key) => ({ type: ARTICLE.UPDATE.FAILURE, error, key }) 
+export const formUpdateArticle = (data) => (dispatch) => {
+  dispatch(formUpdateArticleRequest())
+  return axios({
+    method: 'PUT',
+    responseType: 'json',
+    url: API_ENDPOINT_ARTICLE_LIST(),
+    data,
+  })
+    .then(res => dispatch(formUpdateArticleSuccess(res.data.data, data.id)))
+    .catch(error => dispatch(formUpdateArticleFailure(error)))
 }
 
 

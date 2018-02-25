@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import { 
   fetchArticleList, 
   fetchArticleDetail,
-  createArticle,
+  formCreateArticle,
+  formUpdateArticle,
 } from './articleActions'
 import { store } from '../../../utils';
 
@@ -36,7 +37,8 @@ export const withArticlePost = (WrapperComponent) => (
       article: store(state).article,
     }),
     {
-      createArticle,
+      formCreateArticle,
+      formUpdateArticle,
     }
   )(WrapperComponent)
 )

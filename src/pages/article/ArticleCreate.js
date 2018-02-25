@@ -1,8 +1,8 @@
 import React from 'react';
-import { ArticleCreateForm } from '../../features'
+import { ArticleForm } from '../../features'
 
 const ArticleCreate = (props) => (
-  <ArticleCreateForm {...props} />
+  <ArticleForm {...props} method='POST' />
 )
 
 export default ArticleCreate;
