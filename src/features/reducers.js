@@ -8,3 +8,10 @@ const rootReducer = {
 }
 
 export default rootReducer
+
+/**
+ * Redux Store
+ * @param {rootReducer} state
+ * @return {rootReducer}
+ */
+export const store = (state) => state

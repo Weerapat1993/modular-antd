@@ -5,8 +5,7 @@ import {
   formCreateArticle,
   formUpdateArticle,
 } from './articleActions'
-import { store } from '../../../utils';
-
+import { store } from '../../reducers';
 
 export const withArticle = (WrapperComponent) => (
   connect(

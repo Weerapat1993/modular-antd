@@ -4,7 +4,8 @@ import { func, shape, bool, array, string, oneOf } from 'prop-types';
 import Markdown from 'react-remarkable';
 import { Form, Input, Button, Icon } from 'antd';
 import { withArticlePost } from '../redux'
-import { UserHeader } from '../../../components'
+import { UserHeader, modalError } from '../../../components'
+import styles from './styles'
 
 const FormItem = Form.Item;
 const { TextArea } = Input
@@ -61,6 +62,9 @@ class DynamicRule extends Component {
     if (article.byID < newByID) {
       history.push(`/article/${newByID.reverse()[0]}`)
     }
+    if(article.error !== nextProps.article.error && nextProps.article.error) {
+      modalError(nextProps.article.error)
+    }
   }
 
   handleSubmit(e) {
@@ -113,7 +117,7 @@ class DynamicRule extends Component {
         </UserHeader>
         {
           !isPreview ? (
-            <div style={{ marginTop: 22 }}>
+            <div style={styles.formStyle}>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('title', {
                   initialValue: title,

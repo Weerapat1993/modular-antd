@@ -51,10 +51,14 @@ class ArticleDetail extends Component {
     return (
       <div>
         <UserHeader>
-          <Button.Group size='large'>
-            <Button type='dashed primary' onClick={this.handleEdit} ><Icon type='edit' />{!isMobile && 'Edit'}</Button>
-            <Button type='danger'>{!isMobile && 'Delete'}<Icon type='delete' /></Button>
-          </Button.Group>
+          {
+            !article.isFetching && !article.error && (
+              <Button.Group size='large'>
+                <Button type='dashed primary' onClick={this.handleEdit} ><Icon type='edit' />{!isMobile && 'Edit'}</Button>
+                <Button type='danger'>{!isMobile && 'Delete'}<Icon type='delete' /></Button>
+              </Button.Group>
+            )
+          }
         </UserHeader>
         <Loading 
           isLoading={article.isFetching}

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { fetchProductList } from './productActions'
-import { store } from '../../../utils'
+import { store } from '../../reducers';
 
 export const withProduct = (WrapperComponent) => (
   connect(

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { func, shape, string, bool, arrayOf, object, oneOfType } from 'prop-types'
 import { Link } from 'react-router-dom'
 import moment from 'moment';
-import { List, Avatar, Button } from 'antd'
+import { List, Avatar, Button, Icon, Card } from 'antd'
 import { withArticle } from '../redux';
 import { Loading } from '../../../components';
+import styles from './styles'
+import './styles.css'
+
+const { Meta } = Card
 
 class ArticleController extends Component {
   static propTypes = {
@@ -17,6 +21,9 @@ class ArticleController extends Component {
         string,
       ])
     }).isRequired,
+    history: shape({
+      push: func
+    }).isRequired,
     fetchArticleList: func.isRequired,
   }
 
@@ -28,32 +35,39 @@ class ArticleController extends Component {
   }
 
   render() {
-    const { article, fetchArticleList } = this.props
-
+    const { article, fetchArticleList, history } = this.props
     return (
       <div>
-        <Link to='/article/create'>
-          <Button type='primary'>Create Article</Button>
-        </Link>
-        <h1>Articles</h1>
+        <div style={styles.textRight} >
+          <h1 style={styles.headerText}><Icon type='book' /> Articles</h1>
+          <Link to='/article/create'>
+            <Button type='dashed primary' size='large' ><Icon type='plus' />New Story</Button>
+          </Link>
+        </div>
+        <br />
         <Loading
           isLoading={article.isFetching}
           error={article.error}
           onReload={() => fetchArticleList()}
         >
           <List
-            itemLayout="horizontal"
+            grid={{ gutter: 16, xs: 1, sm: 1, md: 2, lg: 2, xl: 3, xxl: 3 }}
             dataSource={article.byID}
             renderItem={key => {
-              const item = article.keys[key].data
+              const item = article.keys[key].data 
               return (
                 <List.Item>
-                  <List.Item.Meta
-                    avatar={<Avatar />}
-                    title={<Link to={`/article/${key}`}>{item.title}</Link>}
-                    description={item.title}
-                  />
-                  <div>{moment(item.updated_at).fromNow()}</div>
+                  <Card
+                    hoverable
+                    onClick={() => history.push(`/article/${key}`)}
+                    cover={<img alt="example" src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' className='bg-img-cover' />}
+                  >
+                    <Meta
+                      avatar={<Avatar />}
+                      title={item.title}
+                      description={moment(item.updated_at).fromNow()}
+                    />
+                  </Card>
                 </List.Item>
               )
             }}
