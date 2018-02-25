@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { withSizes } from 'react-sizes'
-import moment from 'moment';
 import { func, shape, bool, array } from 'prop-types';
 import Markdown from 'react-remarkable';
-import { Form, Input, Button, List, Avatar, Icon } from 'antd';
+import { Form, Input, Button, Icon } from 'antd';
 import { withArticlePost } from '../redux'
+import { UserHeader } from '../../../components'
 
 const FormItem = Form.Item;
 const { TextArea } = Input
-
 const formItemLayout = {
   wrapperCol: { span: 24 },
 };
@@ -17,15 +16,6 @@ const text = {
   placeholderTitle: 'Please input your title',
   placeholderDescription: 'Please input your description'
 }
-
-const userExample = [
-  {
-    name: 'Weerapat1993',
-    avatar: '',
-    created_at: new Date().getTime(),
-    updated_at: new Date().getTime(),
-  }
-]
 
 class DynamicRule extends Component {
   static propTypes = {
@@ -53,7 +43,7 @@ class DynamicRule extends Component {
   componentWillReceiveProps(nextProps) {
     const { article, history } = this.props
     const newByID = nextProps.article.byID
-    if(article.byID < newByID) {
+    if (article.byID < newByID) {
       history.push(`/article/${newByID.reverse()[0]}`)
     }
   }
@@ -87,27 +77,16 @@ class DynamicRule extends Component {
     const { description, title, isPreview } = this.state
     return (
       <Form onSubmit={this.handleSubmit}>
-        <List
-          itemLayout="horizontal"
-          dataSource={userExample}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
-                title={item.name}
-                description={moment(item.updated_at, "YYYYMMDD").fromNow()}
-              />
-              <Button.Group size='large'>
-                <Button type='dashed primary' onClick={this.handlePreview}>
-                  <Icon type="eye" />{!isMobile ? 'Preview' : null}
-                </Button>
-                <Button type='primary' htmlType="submit" disabled={isPreview}>
-                  {!isMobile ? 'Publish' : null}<Icon type="upload" />
-                </Button>
-              </Button.Group>
-            </List.Item>
-          )}
-        />
+        <UserHeader>
+          <Button.Group size='large'>
+            <Button type='dashed primary' onClick={this.handlePreview}>
+              <Icon type="eye" />{!isMobile ? 'Preview' : null}
+            </Button>
+            <Button type='primary' htmlType="submit" disabled={isPreview}>
+              {!isMobile ? 'Publish' : null}<Icon type="upload" />
+            </Button>
+          </Button.Group>
+        </UserHeader>
         {
           !isPreview ? (
             <div style={{ marginTop: 22 }}>
@@ -119,10 +98,10 @@ class DynamicRule extends Component {
                     message: text.placeholderTitle,
                   }],
                 })(
-                  <Input 
+                  <Input
                     placeholder={text.placeholderTitle}
                     size="large"
-                    onChange={this.handleTitle} 
+                    onChange={this.handleTitle}
                   />
                 )}
               </FormItem>
@@ -134,7 +113,7 @@ class DynamicRule extends Component {
                     message: text.placeholderDescription,
                   }],
                 })(
-                  <TextArea 
+                  <TextArea
                     size="large"
                     placeholder={text.placeholderDescription}
                     autosize={{ minRows: isMobile ? 8 : 24 }}
@@ -156,7 +135,6 @@ class DynamicRule extends Component {
 }
 
 const ArticleCreateForm = Form.create()(DynamicRule);
-
 const mapSizeToProps = ({ width }) => ({
   isMobile: width < 480
 })

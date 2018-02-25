@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { func, object, shape, arrayOf, objectOf, any } from 'prop-types';
+import { withSizes } from 'react-sizes'
+import { func, object, shape, arrayOf, objectOf, any, bool } from 'prop-types';
 import Markdown from 'react-remarkable'
-import { Loading } from '../../../components'
+import { Button, Icon } from 'antd'
+import { Loading, UserHeader } from '../../../components'
 import { withArticleByID, selectArticleWithKey } from '../redux';
 
 class ArticleDetail extends Component {
@@ -10,6 +12,7 @@ class ArticleDetail extends Component {
     match: shape({ params: object }).isRequired,
     byID: arrayOf(any).isRequired,
     keys: objectOf(any).isRequired,
+    isMobile: bool.isRequired,
   }
   componentDidMount() {
     const { byID, match } = this.props
@@ -21,11 +24,17 @@ class ArticleDetail extends Component {
   }
   
   render() {
-    const { keys, match } = this.props
+    const { keys, match, isMobile } = this.props
     const { id } = match.params
     const article = selectArticleWithKey(keys, id)
     return (
       <div>
+        <UserHeader>
+          <Button.Group size='large'>
+            <Button type='dashed primary'><Icon type='edit' />{!isMobile && 'Edit'}</Button>
+            <Button type='danger'>{!isMobile && 'Delete'}<Icon type='delete' /></Button>
+          </Button.Group>
+        </UserHeader>
         <Loading 
           isLoading={article.isFetching}
           error={article.error}
@@ -45,4 +54,8 @@ class ArticleDetail extends Component {
   }
 }
 
-export default withArticleByID(ArticleDetail)
+const mapSizeToProps = ({ width }) => ({
+  isMobile: width < 480
+})
+
+export default withArticleByID(withSizes(mapSizeToProps)(ArticleDetail))
