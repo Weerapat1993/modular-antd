@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AUTH_LOGIN } from './authActionTypes'
+import { AUTH_LOGIN, AUTH_LOGOUT } from './authActionTypes'
 import { API_ENDPOINT_AUTH_LOGIN } from './authEndpoints'
 
 export const authLoginRequest = () => ({ type: AUTH_LOGIN.REQUEST }) 
@@ -16,3 +16,5 @@ export const authLogin = (data) => (dispatch) => {
     .then(res => dispatch(authLoginSuccess(res.data.data)))
     .catch(error => dispatch(authLoginFailure(error)))
 }
+
+export const authLogout = () => ({ type: AUTH_LOGOUT })

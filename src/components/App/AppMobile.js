@@ -110,10 +110,10 @@ class Layouts extends React.Component {
                   )
                 ))
               }
+              <div className='pull-right'>
+                <AuthFacebook isMobile />
+              </div>
             </Breadcrumb>
-            <div className='pull-right'>
-              <AuthFacebook />
-            </div>
             <div style={{ padding: 24, background: '#fff', minHeight: 300, ...this.getSize() }}>
               <Routes />
             </div>

@@ -64,10 +64,11 @@ const Layouts = props => {
               )
             ))
           }
+          <div className='pull-right'>
+            <AuthFacebook />
+          </div>
         </Breadcrumb>
-        <div className='pull-right'>
-          <AuthFacebook />
-        </div>
+        
         <div style={contentStyle}>
           <Routes />
         </div>
