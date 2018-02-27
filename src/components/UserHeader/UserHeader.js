@@ -1,20 +1,13 @@
 import React from 'react'
+import { func, element, node, oneOfType, shape, string, bool, object } from 'prop-types'
 import moment from 'moment'
 import { List, Avatar } from 'antd'
+import { withAuth } from '../../features';
 
-const userExample = [
-  {
-    name: 'Weerapat1993',
-    avatar: '',
-    created_at: new Date().getTime(),
-    updated_at: new Date().getTime(),
-  }
-]
-
-const UserHeader = ({ children }) => (
+const UserHeader = ({ children, auth }) => (
   <List
     itemLayout="horizontal"
-    dataSource={userExample}
+    dataSource={[auth.user]}
     renderItem={item => (
       <List.Item>
         <List.Item.Meta
@@ -28,4 +21,17 @@ const UserHeader = ({ children }) => (
   />
 )
 
-export default UserHeader
+UserHeader.propTypes = {
+  children: oneOfType([
+    func,
+    element,
+    node,
+  ]).isRequired,
+  auth: shape({
+    user: object,
+    isAuth: bool,
+    token: string,
+  }).isRequired,
+}
+
+export default withAuth(UserHeader)

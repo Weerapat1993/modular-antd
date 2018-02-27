@@ -8,6 +8,7 @@ import logo from '../../assets/images/logo.svg'
 import './styles.css'
 import Routes from '../../routes'
 import { menuBar } from '../../config'
+import { AuthFacebook } from '../../features'
 
 const { Content, Footer, Sider } = Layout
 
@@ -110,6 +111,9 @@ class Layouts extends React.Component {
                 ))
               }
             </Breadcrumb>
+            <div className='pull-right'>
+              <AuthFacebook />
+            </div>
             <div style={{ padding: 24, background: '#fff', minHeight: 300, ...this.getSize() }}>
               <Routes />
             </div>

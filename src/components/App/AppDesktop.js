@@ -7,6 +7,7 @@ import Routes from '../../routes'
 import './styles.css'
 import styles from './styles'
 import { menuBar } from '../../config'
+import { AuthFacebook } from '../../features/auth'
 
 const { Header, Content, Footer } = Layout
 
@@ -64,6 +65,9 @@ const Layouts = props => {
             ))
           }
         </Breadcrumb>
+        <div className='pull-right'>
+          <AuthFacebook />
+        </div>
         <div style={contentStyle}>
           <Routes />
         </div>
