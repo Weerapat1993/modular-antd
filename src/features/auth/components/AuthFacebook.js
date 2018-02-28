@@ -1,24 +1,31 @@
 import React, { Component } from 'react'
 import { func, shape, bool, object, string } from 'prop-types'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import { Button, Icon, Avatar, Affix, Popover } from 'antd'
+import { Button, Avatar, Affix, Popover } from 'antd'
 import { withAuthLogin } from '../redux';
 
 class AuthFacebook extends Component {
-  state = {
-    visible: false,
+  constructor() {
+    super()
+    this.state = {
+      visible: false,
+    }
+
+    this.handleVisibleChange = this.handleVisibleChange.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
-  hide = () => {
+
+  hide() {
     this.setState({
       visible: false,
     });
   }
 
-  handleVisibleChange = (visible) => {
+  handleVisibleChange(visible) {
     this.setState({ visible });
   }
 
-  handleLogout = () => {
+  handleLogout() {
     this.hide()
     setTimeout(() => {
       this.props.authLogout()
