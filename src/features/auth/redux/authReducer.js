@@ -2,6 +2,7 @@ import { AUTH_LOGIN, AUTH_LOGOUT } from './authActionTypes'
 
 // InititalState
 const initialState = {
+  isFetching: false,
   token: null,
   isAuth: false,
   user: {},
@@ -14,18 +15,28 @@ const initialState = {
  * @return {initialState}
  */
 export const authReducer = (state = initialState, action) => {
-  const { data, type } = action
+  const { data, type, error } = action
   switch (type) {
     case AUTH_LOGIN.REQUEST:
-      return state
+      return {
+        ...state,
+        isFetching: true,
+        error: '',
+      }
     case AUTH_LOGIN.SUCCESS:
       return { 
+        isFetching: false,
         token: data.token,
         isAuth: true,
         user: data.user,
+        error: '',
       }
     case AUTH_LOGIN.FAILURE:
-      return state
+      return {
+        ...state,
+        isFetching: false,
+        error: error.message,
+      }
     case AUTH_LOGOUT:
       return initialState
     default:

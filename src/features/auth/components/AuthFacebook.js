@@ -67,7 +67,13 @@ class AuthFacebook extends Component {
           isMobile={isMobile}
           callback={responseFacebook} 
           render={renderProps => (
-            <Button shape='circle' icon='facebook' type='primary' onClick={renderProps.onClick} />
+            <Button 
+              loading={auth.isFetching}
+              shape='circle' 
+              icon='facebook' 
+              type='primary' 
+              onClick={renderProps.onClick} 
+            />
           )}
         />
       </Affix>
@@ -79,6 +85,7 @@ AuthFacebook.propTypes = {
   authLogin: func.isRequired,
   authLogout: func.isRequired,
   auth: shape({
+    isFetching: bool,
     user: object,
     isAuth: bool,
     token: string,
