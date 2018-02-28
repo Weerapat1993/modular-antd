@@ -5,6 +5,7 @@
   "devDependencies": {
     "babel-eslint": "^8.2.2",
     "babel-plugin-import": "^1.6.5",
+    "dotenv": "^5.0.1",
     "eslint": "^4.18.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-react": "^1.1.7",

@@ -34,6 +34,7 @@ export const withArticlePost = (WrapperComponent) => (
   connect(
     (state) => ({
       article: Article(state),
+      auth: state.auth,
     }),
     {
       formCreateArticle,

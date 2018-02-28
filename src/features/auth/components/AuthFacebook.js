@@ -3,6 +3,7 @@ import { func, shape, bool, object, string } from 'prop-types'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { Button, Avatar, Affix, Popover } from 'antd'
 import { withAuthLogin } from '../redux';
+import { config } from '../../../config/env'
 
 class AuthFacebook extends Component {
   constructor() {
@@ -62,7 +63,7 @@ class AuthFacebook extends Component {
     return (
       <Affix offsetTop={isMobile ? 10 : 72} style={isMobile ? styleMobile : {}} >
         <FacebookLogin
-          appId="1028852790492705"
+          appId={config.REACT_APP_FACEBOOK_APP_ID}
           fields="name,email,picture"
           isMobile={isMobile}
           callback={responseFacebook} 
@@ -79,6 +80,7 @@ class AuthFacebook extends Component {
       </Affix>
     )
   }
+  
 }
 
 AuthFacebook.propTypes = {
