@@ -28,7 +28,7 @@ class ArticleDetail extends Component {
     const { id } = match.params
     const dataFirst = byID.filter(item => item === +id)
     if(!dataFirst.length) {
-      this.props.fetchArticleDetail(id)
+      this.props.fetchArticleDetail(+id)
     }
   }
 
@@ -50,7 +50,7 @@ class ArticleDetail extends Component {
     const article = selectArticleWithKey(keys, id)
     return (
       <div>
-        <UserHeader>
+        <UserHeader user={article.data}>
           {
             !article.isFetching && !article.error && (
               <Button.Group size='large'>

@@ -1,24 +1,25 @@
 import React from 'react'
-import { func, element, node, oneOfType, shape, string, bool, object } from 'prop-types'
+import { func, element, node, oneOfType, shape, string } from 'prop-types'
 import moment from 'moment'
-import { List, Avatar } from 'antd'
-import { withAuth } from '../../features';
+import { List, Avatar, Affix } from 'antd'
 
-const UserHeader = ({ children, auth }) => (
-  <List
-    itemLayout="horizontal"
-    dataSource={[auth.user]}
-    renderItem={item => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src={item.avatar} />}
-          title={item.name}
-          description={moment(item.updated_at, "YYYYMMDD").fromNow()}
-        />
-        {children}
-      </List.Item>
-    )}
-  />
+const UserHeader = ({ children, user }) => (
+  <Affix>
+    <List
+      itemLayout="horizontal"
+      dataSource={[user]}
+      renderItem={item => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={<Avatar src={item.avatar} />}
+            title={item.user_name || item.name}
+            description={moment(item.updated_at).fromNow()}
+          />
+          {children}
+        </List.Item>
+      )}
+    />
+  </Affix>
 )
 
 UserHeader.propTypes = {
@@ -27,11 +28,18 @@ UserHeader.propTypes = {
     element,
     node,
   ]).isRequired,
-  auth: shape({
-    user: object,
-    isAuth: bool,
-    token: string,
-  }).isRequired,
+  user: shape({
+    avatar: string,
+    user_name: string,
+  }),
 }
 
-export default withAuth(UserHeader)
+UserHeader.defaultProps = {
+  user: {
+    avatar: '',
+    user_name: 'No Name',
+    updated_at: 0,
+  }
+}
+
+export default UserHeader

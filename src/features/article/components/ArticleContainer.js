@@ -63,7 +63,7 @@ class ArticleController extends Component {
                     cover={<img alt="example" src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' className='bg-img-cover' />}
                   >
                     <Meta
-                      avatar={<Avatar />}
+                      avatar={<Avatar src={item.avatar} />}
                       title={item.title}
                       description={moment(item.updated_at).fromNow()}
                     />

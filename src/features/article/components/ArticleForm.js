@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withSizes } from 'react-sizes'
-import { func, shape, bool, array, string, oneOf } from 'prop-types';
+import { func, shape, bool, array, string, oneOf, object } from 'prop-types';
 import Markdown from 'react-remarkable';
 import { Form, Input, Button, Icon } from 'antd';
 import { withArticlePost } from '../redux'
@@ -30,7 +30,12 @@ class DynamicRule extends Component {
       title: string,
       description: string,
     }),
-    method: oneOf(['PUT', 'POST']).isRequired
+    method: oneOf(['PUT', 'POST']).isRequired,
+    auth: shape({
+      token: string,
+      user: object,
+      isAuth: bool,
+    }).isRequired
   }
 
   static defaultProps = {
@@ -69,7 +74,7 @@ class DynamicRule extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { form, method, history, dataForm } = this.props
+    const { form, method, history, dataForm, auth } = this.props
     form.validateFields((err, values) => {
       if (!err) {
         if(method === 'PUT') {
@@ -80,7 +85,10 @@ class DynamicRule extends Component {
           this.props.formUpdateArticle(newValue, method)
           history.push(`/article/${dataForm.id}`)
         } else {
-          this.props.formCreateArticle(values, method)
+          this.props.formCreateArticle({
+            ...values,
+            user_id: auth.user.id,
+          }, method)
         }
       }
     });
@@ -100,12 +108,12 @@ class DynamicRule extends Component {
   }
 
   render() {
-    const { isMobile } = this.props;
+    const { isMobile, auth } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { description, title, isPreview, } = this.state
+    const { description, title, isPreview } = this.state
     return (
       <Form onSubmit={this.handleSubmit}>
-        <UserHeader>
+        <UserHeader user={auth.user}>
           <Button.Group size='large'>
             <Button type='dashed primary' onClick={this.handlePreview}>
               <Icon type="eye" />{!isMobile ? 'Preview' : null}
