@@ -33,7 +33,23 @@ class AuthFacebook extends Component {
     }, 500)
   }
 
-  render() {
+  renderHasAuth() {
+    const { auth } = this.props
+    return (
+      <Popover
+        content={<a onClick={this.handleLogout}>Logout</a>}
+        title={auth.user.name}
+        trigger="click"
+        visible={this.state.visible}
+        onVisibleChange={this.handleVisibleChange}
+        placement="bottomRight"
+      >
+        <Avatar src={auth.user.avatar} />
+      </Popover>
+    )
+  }
+
+  renderNotAuth() {
     const { authLogin, auth, isMobile } = this.props
     const responseFacebook = ({ email, name, picture }) => {
       const data = {
@@ -43,44 +59,44 @@ class AuthFacebook extends Component {
       }
       authLogin(data)
     }
+    return (
+      <FacebookLogin
+        appId={config.REACT_APP_FACEBOOK_APP_ID}
+        fields="name,email,picture"
+        isMobile={isMobile}
+        callback={responseFacebook} 
+        render={renderProps => (
+          <Button 
+            loading={auth.isFetching}
+            shape='circle' 
+            icon='facebook' 
+            type='primary'
+            onClick={renderProps.onClick} 
+          />
+        )}
+      />
+    )
+  }
+
+  render() {
+    const { auth, isMobile } = this.props
     const styleMobile = { position: 'absolute', top: 10, right: 10 }
-    if(auth.isAuth) {
+    if(isMobile) {
+      if(auth.isAuth) {
+        return (
+          <Affix offsetTop={isMobile ? 10 : 72} style={isMobile ? styleMobile : {}} >
+            {this.renderHasAuth()}
+          </Affix>
+        )
+      }
       return (
         <Affix offsetTop={isMobile ? 10 : 72} style={isMobile ? styleMobile : {}} >
-          <Popover
-            content={<a onClick={this.handleLogout}>Logout</a>}
-            title={auth.user.name}
-            trigger="click"
-            visible={this.state.visible}
-            onVisibleChange={this.handleVisibleChange}
-            placement="bottomRight"
-          >
-            <Avatar src={auth.user.avatar} />
-          </Popover>
+          {this.renderNotAuth()}
         </Affix>
       )
     }
-    return (
-      <Affix offsetTop={isMobile ? 10 : 72} style={isMobile ? styleMobile : {}} >
-        <FacebookLogin
-          appId={config.REACT_APP_FACEBOOK_APP_ID}
-          fields="name,email,picture"
-          isMobile={isMobile}
-          callback={responseFacebook} 
-          render={renderProps => (
-            <Button 
-              loading={auth.isFetching}
-              shape='circle' 
-              icon='facebook' 
-              type='primary' 
-              onClick={renderProps.onClick} 
-            />
-          )}
-        />
-      </Affix>
-    )
+    return auth.isAuth ? this.renderHasAuth() : this.renderNotAuth() 
   }
-  
 }
 
 AuthFacebook.propTypes = {

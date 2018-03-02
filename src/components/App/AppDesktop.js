@@ -44,13 +44,16 @@ const Layouts = props => {
         >
           {
             menuBar.map(item => (
-              <Menu.Item key={item.path}  >
+              <Menu.Item key={item.path} >
                 <Icon type={item.icon} />
                 <span>{item.title}</span>
               </Menu.Item>
             ))
           }
         </Menu>
+        <div className='pull-right'>
+          <AuthFacebook />
+        </div>
       </Header>
       <Content className='container' style={styles.contentStyle}>
         <Breadcrumb style={styles.breedcrumbStyle}>
@@ -64,11 +67,7 @@ const Layouts = props => {
               )
             ))
           }
-          <div className='pull-right'>
-            <AuthFacebook />
-          </div>
         </Breadcrumb>
-        
         <div style={contentStyle}>
           <Routes />
         </div>
