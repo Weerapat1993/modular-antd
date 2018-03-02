@@ -16,7 +16,9 @@ const AuthPermission = ({ auth, authLogin }) => {
   }
   return (
     <div style={styles.container}>
-      <Icon type="lock" style={styles.loginIcon} />
+      <div style={styles.iconBg}>
+        <Icon type="lock" style={styles.loginIcon} />
+      </div>
       <div style={styles.loginHeader}>
         User Permission!
       </div> 
@@ -40,6 +42,14 @@ const AuthPermission = ({ auth, authLogin }) => {
           </Button>
         )}
       />
+      <br />
+      <Button 
+        size='large'
+        icon='user' 
+        type='dashed primary'
+      >
+        Login with Email
+      </Button>
     </div>
   )
 }

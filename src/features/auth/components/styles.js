@@ -2,8 +2,21 @@ import { Theme } from '../../../config'
 
 const styles = {
   container: {
+    display: 'flex',
+    flexDirection: 'column',
     margin: 20,
-    textAlign: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconBg: {
+    backgroundColor: Theme['@primary-color'],
+    width: 256,
+    height: 256,
+    borderRadius: 128,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    display: 'flex',
   },
   loadingIcon: {
     margin: 30,
@@ -25,7 +38,7 @@ const styles = {
   },
   loginIcon: { 
     fontSize: 128, 
-    color: '#999',
+    color: '#FFF',
   },
   loginHeader: {
     margin: '20px 20px',
@@ -37,6 +50,7 @@ const styles = {
     color: '#999',
     fontSize: 20,
     margin: 15,
+    textAlign: 'center',
   }
 }
 
