@@ -107,11 +107,19 @@ class DynamicRule extends Component {
     this.setState({ isPreview: !isPreview })
   }
 
+  renderError() {
+    return (
+      <div>
+        Error! User is not found.
+      </div>
+    )
+  }
+
   render() {
-    const { isMobile, auth } = this.props;
+    const { isMobile, auth, article, method } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { description, title, isPreview } = this.state
-    return (
+    return (auth.user.id === article.user_id) && method === 'PUT' ? this.renderError() : (
       <Form onSubmit={this.handleSubmit}>
         <UserHeader user={auth.user}>
           <Button.Group size='large'>

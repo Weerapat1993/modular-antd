@@ -1,4 +1,8 @@
 
 import AuthFacebook from './AuthFacebook'
+import AuthPermission from './AuthPermission'
 
-export { AuthFacebook }
+export {
+  AuthFacebook,
+  AuthPermission,
+}
