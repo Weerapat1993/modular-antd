@@ -5,6 +5,7 @@ import Markdown from 'react-remarkable'
 import { Button, Icon } from 'antd'
 import { Loading, UserHeader } from '../../../components'
 import { withArticleByID, selectArticleWithKey } from '../redux';
+import { AuthCheck } from '../../auth';
 
 class ArticleDetail extends Component {
   static propTypes = {
@@ -53,10 +54,12 @@ class ArticleDetail extends Component {
         <UserHeader user={article.data}>
           {
             !article.isFetching && !article.error && (
-              <Button.Group size='large'>
-                <Button type='dashed primary' onClick={this.handleEdit} ><Icon type='edit' />{!isMobile && 'Edit'}</Button>
-                <Button type='danger'>{!isMobile && 'Delete'}<Icon type='delete' /></Button>
-              </Button.Group>
+              <AuthCheck>
+                <Button.Group size='large'>
+                  <Button type='dashed primary' onClick={this.handleEdit} ><Icon type='edit' />{!isMobile && 'Edit'}</Button>
+                  <Button type='danger'>{!isMobile && 'Delete'}<Icon type='delete' /></Button>
+                </Button.Group>
+              </AuthCheck>
             )
           }
         </UserHeader>

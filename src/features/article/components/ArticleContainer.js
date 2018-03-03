@@ -41,7 +41,7 @@ class ArticleController extends Component {
         <div style={styles.textRight} >
           <h1 style={styles.headerText}><Icon type='book' /> Articles</h1>
           <Link to='/article/create'>
-            <Button type='dashed primary' size='large' ><Icon type='plus' />New Story</Button>
+            <Button type='dashed primary' size='large' icon='plus'>New Story</Button>
           </Link>
         </div>
         <br />

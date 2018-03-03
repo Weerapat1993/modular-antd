@@ -5,4 +5,4 @@ export {
   withAuthPermission,
   withAuthWithToken
 } from './authConnector'
-export { authReducer, Auth } from './authReducer'
+export { authReducer } from './authReducer'
