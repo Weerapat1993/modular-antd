@@ -1,4 +1,4 @@
-import { withPermission } from '../../features'
+import { withAuthPermission } from '../../features'
 import ArticleHome from './ArticlePage'
 import ArticleCreate from './ArticleCreate'
 import ArticleDetail from './ArticleDetail'
@@ -6,7 +6,7 @@ import ArticleUpdate from './ArticleUpdate'
 
 export default {
   Home: ArticleHome,
-  Create: withPermission(ArticleCreate),
+  Create: withAuthPermission(ArticleCreate),
   Detail: ArticleDetail,
-  Edit: withPermission(ArticleUpdate),
+  Edit: withAuthPermission(ArticleUpdate),
 }

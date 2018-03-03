@@ -1,4 +1,5 @@
 import React from 'react'
+import { shape, number, string, func } from 'prop-types'
 import _ from 'lodash'
 import Case from 'case'
 import { Link } from 'react-router-dom'
@@ -78,6 +79,12 @@ const Layouts = props => {
       </Footer>
     </Layout>
   )
+}
+
+Layouts.propTypes = {
+  location: shape({ pathname: string }).isRequired,
+  history: shape({ push: func }).isRequired,
+  dimenstion: shape({ width: number, height: number }).isRequired,
 }
 
 export default Layouts

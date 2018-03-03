@@ -1,3 +1,8 @@
 
-export { withAuthLogin, withAuth, withPermission } from './authConnector'
+export { 
+  withAuthLogin, 
+  withAuth, 
+  withAuthPermission,
+  withAuthWithToken
+} from './authConnector'
 export { authReducer, Auth } from './authReducer'

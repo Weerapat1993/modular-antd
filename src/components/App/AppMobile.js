@@ -71,7 +71,8 @@ class Layouts extends React.Component {
     const keyPath = _.get(location, 'state.keyPath', [location.pathname])
     const menuStyle = positionFixed ? {
       position: 'fixed',
-      height: `100%`
+      height: `100%`,
+      zIndex: 500
     } : {}
     const layoutStyle = positionFixed ? { marginLeft: !collapsed ? 200 : 0 } : {}
     return (
@@ -80,7 +81,7 @@ class Layouts extends React.Component {
           breakpoint="md"
           collapsedWidth="0"
           onCollapse={this.onCollapse}
-          style={{ zIndex: 500, ...menuStyle }}
+          style={menuStyle}
         >
           <div className='ant-logo'>
             <img alt='logo' src={logo} className='ant-logo-img' />
@@ -98,8 +99,8 @@ class Layouts extends React.Component {
         </Sider>
         <Layout style={layoutStyle}>
           { !collapsed && isMobile && <div className='dark-bg' /> }
-          <Content style={{ margin: 0 }}>
-            <Breadcrumb style={{ margin: '16px 24px', ...this.getSize() }}>
+          <Content>
+            <Breadcrumb style={{ margin: '16px 24px' , ...this.getSize()}}>
               <Breadcrumb.Item><Icon type="home" /> <Link to='/'>Home</Link></Breadcrumb.Item>
               {
                 breadcrumbs.map((item, i) => (

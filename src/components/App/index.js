@@ -1,27 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { bool } from 'prop-types'
 import withSizes from 'react-sizes'
 import AppDesktop from './AppDesktop'
 import AppMobie from './AppMobile'
-import { withAuthLogin } from '../../features/auth'
+import { withAuthWithToken } from '../../features/auth'
 
-class AppContainer extends Component {
-  componentWillMount() {
-    if(localStorage.jwtToken) {
-      const token = localStorage.jwtToken
-      // setAuthorizationToken(localStorage.jwtToken)
-      this.props.getAuthUserWithToken(token)
-    }
-  }
+const AppContainer = (props) => (
+  props.isDesktop ? 
+    <AppDesktop {...props} />
+  : 
+    <AppMobie {...props} />
+)
 
-  render() {
-    const { isDesktop } = this.props
-    return (
-      isDesktop ? 
-        <AppDesktop {...this.props} />
-      : 
-        <AppMobie {...this.props} />
-    )
-  }
+AppContainer.propTypes = {
+  isDesktop: bool.isRequired,
 }
 
 const mapSizesToProps = ({ width, height }) => ({
@@ -33,6 +25,6 @@ const mapSizesToProps = ({ width, height }) => ({
   }
 })
 
-const App = withAuthLogin(withSizes(mapSizesToProps)(AppContainer))
+const App = withAuthWithToken(withSizes(mapSizesToProps)(AppContainer))
 
 export { App }
