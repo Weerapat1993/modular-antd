@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { func, arrayOf, string, object, objectOf } from 'prop-types'
-import { Radio, Button, List, Avatar } from 'antd'
+import { func, object, objectOf } from 'prop-types'
+import { List, Avatar } from 'antd'
 import moment from 'moment'
-import { withProduct, selectProductWithKey } from '../redux'  
+import { withProduct, selectProductWithKey } from '../redux'
 import { LinkConfirm, Loading } from '../../../components'
 
 const GITHUB_NAME = 'Weerapat1993'
@@ -12,7 +12,7 @@ class ProfilePage extends Component {
   static propTypes = {
     fetchProductList: func.isRequired,
     keys: objectOf(object),
-    byID: arrayOf(string).isRequired,
+    // byID: arrayOf(string).isRequired,
   }
 
   static defaultProps = {
@@ -46,7 +46,7 @@ class ProfilePage extends Component {
     const { githubUser } = this.state
     const { keys } = this.props
     const profile = selectProductWithKey(githubUser, keys)
-    if(profile.isReload) {
+    if (profile.isReload) {
       this.props.fetchProductList(githubUser)
     }
   }
@@ -60,22 +60,21 @@ class ProfilePage extends Component {
 
   render() {
     const { githubUser } = this.state
-    const { byID, fetchProductList, keys } = this.props
+    const { fetchProductList, keys } = this.props
     const profile = selectProductWithKey(githubUser, keys)
-    const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
+    // const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
     const Linker = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
     return (
       <div>
         <h1>Github Profile</h1>
-        <div>
-          <Button.Group>
-            {
-              byID.map((item) => (
-                <Button type='primary' onClick={() => this.githubProfile(item)} key={item}>{item}</Button>
-              ))
-            }
-          </Button.Group>
-        </div>
+        {/*
+        <Button.Group>
+          {
+            byID.map((item) => (
+              <Button type='primary' onClick={() => this.githubProfile(item)} key={item}>{item}</Button>
+            ))
+          }
+        </Button.Group>
         <Radio.Group onChange={this.handleGithubProfile} defaultValue={githubUser}>
           {
             btnGroups.map((item) => (
@@ -83,7 +82,8 @@ class ProfilePage extends Component {
             ))
           }
         </Radio.Group>
-        <Loading 
+        */}
+        <Loading
           isLoading={profile.isFetching}
           error={profile.error}
           onReload={() => fetchProductList(githubUser)}

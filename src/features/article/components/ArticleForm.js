@@ -3,7 +3,7 @@ import { withSizes } from 'react-sizes'
 import { func, shape, bool, array, string, oneOf, object } from 'prop-types';
 import Markdown from 'react-remarkable';
 import { Form, Input, Button, Icon } from 'antd';
-import { withArticlePost } from '../redux'
+import { withArticlePost, selectArticleWithKey } from '../redux'
 import { UserHeader, modalError } from '../../../components'
 import styles from './styles'
 
@@ -77,7 +77,8 @@ class DynamicRule extends Component {
     const { form, method, history, dataForm, auth } = this.props
     form.validateFields((err, values) => {
       if (!err) {
-        const image_url = values.description.split('![Image](')[1].split(/\)/)[0];
+        const images = values.description.split('![Image](')
+        const image_url = images.length > 1 ? values.description.split('![Image](')[1].split(/\)/)[0] : ''
         if(method === 'PUT') {
           const newValue = {
             id: dataForm.id,
@@ -120,10 +121,11 @@ class DynamicRule extends Component {
   }
 
   render() {
-    const { isMobile, auth, article, method } = this.props;
+    const { isMobile, auth, article, dataForm, method } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { description, title, isPreview } = this.state
-    return (auth.user.id === article.user_id) && method === 'PUT' ? this.renderError() : (
+    const articleByID = selectArticleWithKey(article.keys, dataForm.id)
+    return (auth.user.id !== articleByID.data.user_id) && method === 'PUT' ? this.renderError() : (
       <Form onSubmit={this.handleSubmit}>
         <UserHeader user={auth.user}>
           <Button.Group size='large'>
