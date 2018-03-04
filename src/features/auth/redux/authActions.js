@@ -26,7 +26,7 @@ export const getAuthUserWithToken = (token) => (dispatch) => {
   return axios({
     method: 'GET',
     responseType: 'json',
-    url: API_ENDPOINT_AUTH_USER_WITH_TOKEN(),
+    url: API_ENDPOINT_AUTH_USER_WITH_TOKEN(token),
     headers: {
       Authorization: token
     }

@@ -3,10 +3,16 @@ const {
   NODE_ENV,
   PORT,
   REACT_APP_FACEBOOK_APP_ID,
+  REACT_APP_KEY,
+  REACT_APP_ENDPOINT,
+  REACT_APP_URL,
 } = process.env
 
 export const config = {
   NODE_ENV,
   PORT,
   REACT_APP_FACEBOOK_APP_ID,
+  REACT_APP_KEY,
+  REACT_APP_ENDPOINT,
+  REACT_APP_URL,
 }

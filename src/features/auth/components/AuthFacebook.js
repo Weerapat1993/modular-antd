@@ -35,9 +35,10 @@ class AuthFacebook extends Component {
 
   renderHasAuth() {
     const { auth } = this.props
+    const content = () => <a onClick={this.handleLogout}>Logout</a>
     return (
       <Popover
-        content={<a onClick={this.handleLogout}>Logout</a>}
+        content={content()}
         title={auth.user.name}
         trigger="click"
         visible={this.state.visible}
@@ -55,7 +56,8 @@ class AuthFacebook extends Component {
       const data = {
         email,
         name,
-        avatar: picture.data.url
+        avatar: picture.data.url,
+        password: 123456,
       }
       authLogin(data)
     }
@@ -65,13 +67,13 @@ class AuthFacebook extends Component {
         fields="name,email,picture"
         isMobile={isMobile}
         callback={responseFacebook} 
-        render={renderProps => (
+        render={({ onClick }) => (
           <Button 
             loading={auth.isFetching}
             shape='circle' 
             icon='facebook' 
             type='primary'
-            onClick={renderProps.onClick} 
+            onClick={onClick} 
           />
         )}
       />

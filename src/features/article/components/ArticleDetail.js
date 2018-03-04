@@ -3,7 +3,7 @@ import { withSizes } from 'react-sizes'
 import { func, object, shape, arrayOf, objectOf, any, bool, string } from 'prop-types';
 import Markdown from 'react-remarkable'
 import { Button, Icon } from 'antd'
-import { Loading, UserHeader } from '../../../components'
+import { Loading, UserHeader, SEO } from '../../../components'
 import { withArticleByID, selectArticleWithKey } from '../redux';
 import { AuthCheck } from '../../auth';
 
@@ -46,11 +46,19 @@ class ArticleDetail extends Component {
   }
   
   render() {
-    const { keys, match, isMobile } = this.props
+    const { keys, match, location, isMobile } = this.props
     const { id } = match.params
     const article = selectArticleWithKey(keys, id)
     return (
       <div>
+        { 
+          article.data && (
+            <SEO 
+              title={article.data.title}
+              path={location.pathname}
+            /> 
+          )
+        }
         <UserHeader user={article.data}>
           {
             !article.isFetching && !article.error && (

@@ -77,16 +77,20 @@ class DynamicRule extends Component {
     const { form, method, history, dataForm, auth } = this.props
     form.validateFields((err, values) => {
       if (!err) {
+        const image_url = values.description.split('![Image](')[1].split(/\)/)[0];
         if(method === 'PUT') {
           const newValue = {
             id: dataForm.id,
             ...values,
+            image_url,
+            user_id: auth.user.id,
           }
           this.props.formUpdateArticle(newValue, method)
           history.push(`/article/${dataForm.id}`)
         } else {
           this.props.formCreateArticle({
             ...values,
+            image_url,
             user_id: auth.user.id,
           }, method)
         }

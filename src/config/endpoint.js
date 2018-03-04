@@ -1,4 +1,7 @@
-// API_URL
-export const API_URL = 'http://localhost:8000/api'
+import { config } from './env'
 
-export const API_ENDPOINT = (PATH) => `${API_URL}${PATH}`
+const APP_ENDPOINT = config.REACT_APP_ENDPOINT
+const APP_URL = config.REACT_APP_URL
+
+export const API_ENDPOINT = (PATH) => `${APP_ENDPOINT}${PATH}`
+export const URL = (PATH) => `${APP_URL}${PATH}`

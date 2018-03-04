@@ -1,8 +1,8 @@
 import React from 'react';
-import { ProductContainer } from '../../features'
+import { ArticleContainer } from '../../features'
 
 const HomePage = (props) => (
-  <ProductContainer {...props} />
+  <ArticleContainer {...props} />
 )
 
 export default HomePage;

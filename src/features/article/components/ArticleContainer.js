@@ -60,7 +60,7 @@ class ArticleController extends Component {
                   <Card
                     hoverable
                     onClick={() => history.push(`/article/${key}`)}
-                    cover={<img alt="example" src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png' className='bg-img-cover' />}
+                    cover={<img alt="example" src={item.image_url || 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'} className='bg-img-cover' />}
                   >
                     <Meta
                       avatar={<Avatar src={item.avatar} />}
