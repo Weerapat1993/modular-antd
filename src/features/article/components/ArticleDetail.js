@@ -6,6 +6,7 @@ import { Button, Icon } from 'antd'
 import { Loading, UserHeader, SEO } from '../../../components'
 import { withArticleByID, selectArticleWithKey } from '../redux';
 import { AuthCheck } from '../../auth';
+import { CommentContainer } from '../../comment';
 
 class ArticleDetail extends Component {
   static propTypes = {
@@ -85,6 +86,7 @@ class ArticleDetail extends Component {
             )
           }
         </Loading>
+        { article.data && <CommentContainer articleID={+article.data.id} /> }
       </div>
     );
   }
