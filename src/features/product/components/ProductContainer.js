@@ -1,12 +1,43 @@
 import React, { Component } from 'react'
 import { func, object, objectOf } from 'prop-types'
-import { List, Avatar } from 'antd'
+import { List, Avatar, Icon } from 'antd'
 import moment from 'moment'
 import { withProduct, selectProductWithKey } from '../redux'
 import { LinkConfirm, Loading } from '../../../components'
 
 const GITHUB_NAME = 'Weerapat1993'
-// const { Meta } = Card
+
+const colorLanguage = (lang) => {
+  switch(lang) {
+    case 'JavaScript':
+      return '#ffcf02'
+    case 'PHP':
+      return '#4e5c95'
+    case 'Shell':
+      return '#88e050'
+    default:
+      return '#999'
+  }
+}
+
+const IconText = ({ type, text, color, iconRight }) => {
+  const styleDefault = iconRight ? { marginLeft: 8 } : { marginRight: 8 } 
+  const iconStyles = color ? { color, ...styleDefault } : styleDefault
+  if(iconRight) {
+    return (
+      <span>
+        {text}
+        <Icon type={type} style={iconStyles} />
+      </span>
+    )
+  }
+  return (
+    <span>
+      <Icon type={type} style={iconStyles} />
+      {text}
+    </span>
+  )
+}
 
 class ProfilePage extends Component {
   static propTypes = {
@@ -63,7 +94,6 @@ class ProfilePage extends Component {
     const { fetchProductList, keys } = this.props
     const profile = selectProductWithKey(githubUser, keys)
     // const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
-    const Linker = ({ item }) => <a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.full_name}</a>
     return (
       <div>
         <h1>Github Profile</h1>
@@ -88,36 +118,32 @@ class ProfilePage extends Component {
           error={profile.error}
           onReload={() => fetchProductList(githubUser)}
         >
-          {/* <List
-            grid={{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 6, xxl: 6 }}
-            dataSource={profile.data}
-            renderItem={item => (
-              <List.Item>
-                <Card
-                  hoverable
-                  style={{ width: 180, height: 280 }}
-                  onClick={() => this.confirmUrl(item.html_url)}
-                  cover={<img alt="example" src={item.owner.avatar_url} />}
-                >
-                  <Meta
-                    title={item.name}
-                    description={moment(item.updated_at, "YYYYMMDD").fromNow()}
-                  />
-                </Card>
-              </List.Item>
-            )}
-          /> */}
           <List
             itemLayout="horizontal"
+            size="large"
             dataSource={profile.data}
             renderItem={item => (
-              <List.Item>
+              <List.Item 
+                key={item.title}
+                actions={[
+                  <IconText key='star' type="star" text={item.stargazers_count} color='#ffcf02' />, 
+                  <IconText key='eye' type="eye" text={item.watchers_count} />, 
+                  <IconText key='message' type="message" text={item.open_issues} />
+                ]}
+              >
                 <List.Item.Meta
                   avatar={<Avatar src={item.owner.avatar_url} />}
-                  title={<Linker item={item} />}
-                  description={item.description}
+                  title={<a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.name}</a>}
+                  description={moment(item.pushed_at).fromNow()}
                 />
-                <div>{moment(item.updated_at, "YYYYMMDD").fromNow()}</div>
+                <div>
+                  <IconText 
+                    type="check-circle" 
+                    text={item.language || 'None'} 
+                    color={colorLanguage(item.language)} 
+                    iconRight
+                  />
+                </div>
               </List.Item>
             )}
           />
