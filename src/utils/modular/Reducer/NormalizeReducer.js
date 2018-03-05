@@ -25,6 +25,12 @@ const GET_FAILURE = (action) => ({
  * ```js
  * const reducer = new Reducer(state, action)
  * ```
+ * @typedef {Object} StateWithKey
+ * @property {boolean} isFetching
+ * @property {boolean} isReload
+ * @property {string} error
+ * @property {*} data
+ * 
  * @typedef {Object} State
  * @property {Array.<string>} byID
  * @property {Object.<Object>} keys 
@@ -123,6 +129,14 @@ export class NormalizeReducer {
       ...GET_FAILURE(this.action),
       ...data
     })
+  }
+
+  /** 
+   * Get State With Key
+   * @return {StateWithKey}
+   */
+  getStateWithKey() {
+    return this.state.keys[this.key]
   }
 }
 

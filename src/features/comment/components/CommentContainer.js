@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withSizes } from 'react-sizes'
 import moment from 'moment'
 import { arrayOf, object, shape, bool, number, func } from 'prop-types'
 import { List, Avatar, Button } from 'antd'
@@ -18,6 +19,8 @@ class CommentList extends Component {
     }).isRequired,
     articleID: number.isRequired,
     fetchCommentList: func.isRequired,
+    isMobile: bool.isRequired,
+    deleteCommentByID: func.isRequired,
   }
 
   componentDidMount() {
@@ -28,14 +31,22 @@ class CommentList extends Component {
     }
   }
 
+  handleDelete(id) {
+    const { articleID } = this.props
+    const data = {
+      id,
+    }
+    this.props.deleteCommentByID(data, articleID)
+  }
+
   render() {
-    const { comment, auth, articleID, fetchCommentList } = this.props
+    const { comment, auth, articleID, fetchCommentList, isMobile } = this.props
     const userID = auth.user.id ? auth.user.id : 0
     const commentWithArticle = selectCommentListWithKey(comment.keys, articleID)
     return (
       <div>
         <h2>Comments</h2>
-        <CommentForm articleID={articleID} />
+        <CommentForm articleID={articleID} isMobile={isMobile} />
         <Loading 
           isLoading={commentWithArticle.isFetching}
           error={commentWithArticle.error}
@@ -44,20 +55,24 @@ class CommentList extends Component {
           <List
             itemLayout="horizontal"
             dataSource={commentWithArticle.data || []}
-            renderItem={item => {
-              return (
+            renderItem={item => (
                 <List.Item 
-                  actions={userID === item.user_id ? [<Button key='edit' type='dashed' icon='edit' shape='circle' />] : [<Button key='edit' type='dashed' icon='ellipsis' shape='circle' />]}
+                  actions={userID === item.user_id ? [
+                    <Button key='edit' type='dashed' icon='edit' shape='circle' />,
+                    <Button key='delete' type='danger' icon='close' shape='circle' onClick={() => this.handleDelete(item.id)} />,
+                  ] : [
+                    <Button key='menu' type='dashed' icon='ellipsis' shape='circle' />
+                  ]}
                 >
                   <List.Item.Meta
                     avatar={<Avatar style={styles.marginLeft(10)} src={item.avatar || ''} />}
                     title={item.user_name}
                     description={item.comment}
                   />
-                  <div>{moment(item.created_at).fromNow()}</div>
+                  { !isMobile && <div>{moment(item.created_at).fromNow()}</div> }
                 </List.Item>
               )
-            }}
+            }
           />
         </Loading>
       </div>
@@ -65,4 +80,13 @@ class CommentList extends Component {
   }
 }
 
-export default withComment(CommentList)
+const mapSizesToProps = ({ width, height }) => ({
+  isMobile: width < 480,
+  isDesktop: width > 1024,
+  dimenstion: {
+    width, 
+    height,
+  }
+})
+
+export default withComment(withSizes(mapSizesToProps)(CommentList))

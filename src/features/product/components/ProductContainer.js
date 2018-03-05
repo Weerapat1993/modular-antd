@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withSizes } from 'react-sizes'
 import { func, object, objectOf } from 'prop-types'
 import { List, Avatar, Icon } from 'antd'
 import moment from 'moment'
@@ -91,7 +92,7 @@ class ProfilePage extends Component {
 
   render() {
     const { githubUser } = this.state
-    const { fetchProductList, keys } = this.props
+    const { fetchProductList, keys, isMobile } = this.props
     const profile = selectProductWithKey(githubUser, keys)
     // const btnGroups = [GITHUB_NAME, 'NotFoundData', 'facebook']
     return (
@@ -125,7 +126,7 @@ class ProfilePage extends Component {
             renderItem={item => (
               <List.Item 
                 key={item.title}
-                actions={[
+                actions={isMobile ? null : [
                   <IconText key='star' type="star" text={item.stargazers_count} color='#ffcf02' />, 
                   <IconText key='eye' type="eye" text={item.watchers_count} />, 
                   <IconText key='message' type="message" text={item.open_issues} />
@@ -137,12 +138,18 @@ class ProfilePage extends Component {
                   description={moment(item.pushed_at).fromNow()}
                 />
                 <div>
-                  <IconText 
-                    type="check-circle" 
-                    text={item.language || 'None'} 
-                    color={colorLanguage(item.language)} 
-                    iconRight
-                  />
+                  {
+                    isMobile ? (
+                      <Icon type="check-circle" style={{ color: colorLanguage(item.language) }} />
+                    ) : (
+                      <IconText 
+                        type="check-circle" 
+                        text={item.language || 'None'} 
+                        color={colorLanguage(item.language)} 
+                        iconRight
+                      />
+                    )
+                  }
                 </div>
               </List.Item>
             )}
@@ -153,4 +160,14 @@ class ProfilePage extends Component {
   }
 }
 
-export default withProduct(ProfilePage)
+const mapSizesToProps = ({ width, height }) => ({
+  isMobile: width < 480,
+  isDesktop: width > 1024,
+  dimenstion: {
+    width, 
+    height,
+  }
+})
+
+
+export default withProduct(withSizes(mapSizesToProps)(ProfilePage))

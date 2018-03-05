@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { fetchProductList } from './productActions'
 import { Product } from './productReducer'
 
-export const withProduct = (WrapperComponent) => (
+export const withProduct = (
   connect(
     // MapStateToProps
     (state) => ({
@@ -12,6 +12,6 @@ export const withProduct = (WrapperComponent) => (
     {
       fetchProductList,
     }
-  )(WrapperComponent)
+  )
 )
 

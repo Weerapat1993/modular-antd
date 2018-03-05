@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { func, bool, number } from 'prop-types'
 import { List, Avatar, Input, Button, Icon } from 'antd'
-import { withSizes } from 'react-sizes'
 import styles from './styles'
 import { AuthCheck } from '../../auth';
 import { withComment } from '../redux';
@@ -25,7 +24,7 @@ class CommentForm extends Component {
   }
 
   emitEmpty() {
-    this.commentInput.focus();
+    this.commentInput.input.value = ''
     this.setState({ comment: '' });
   }
 
@@ -85,13 +84,4 @@ class CommentForm extends Component {
   }
 }
 
-const mapSizesToProps = ({ width, height }) => ({
-  isMobile: width < 480,
-  isDesktop: width > 1024,
-  dimenstion: {
-    width, 
-    height,
-  }
-})
-
-export default withComment(withSizes(mapSizesToProps)(CommentForm))
+export default withComment(CommentForm)

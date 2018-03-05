@@ -65,14 +65,14 @@ export const formUpdateArticle = (data) => (dispatch) => {
 export const deleteArticleByIDRequest = (key) => ({ type: ARTICLE.DELETE.REQUEST, key }) 
 export const deleteArticleByIDSuccess = (data, key) => ({ type: ARTICLE.DELETE.SUCCESS, data, key }) 
 export const deleteArticleByIDFailure = (error, key) => ({ type: ARTICLE.DELETE.FAILURE, error, key }) 
-export const deleteArticleByID = (data) => (dispatch) => {
-  dispatch(deleteArticleByIDRequest())
+export const deleteArticleByID = (data, key) => (dispatch) => {
+  dispatch(deleteArticleByIDRequest(key))
   return axios({
-    method: 'POST',
+    method: 'DELETE',
     responseType: 'json',
     url: API_ENDPOINT_ARTICLE_LIST(),
     data,
   })
-    .then(res => dispatch(deleteArticleByIDSuccess(res.data.data, res.data.data.id)))
-    .catch(error => dispatch(deleteArticleByIDFailure(error)))
+    .then(res => dispatch(deleteArticleByIDSuccess(res.data.data, key)))
+    .catch(error => dispatch(deleteArticleByIDFailure(error, key)))
 }
