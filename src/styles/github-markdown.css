@@ -168,6 +168,8 @@
 
 .markdown-body img {
   border-style: none;
+  display: block;
+  margin: 0 auto;
 }
 
 .markdown-body code,
