@@ -4,8 +4,9 @@ import { func, object, objectOf } from 'prop-types'
 import { List, Avatar, Icon } from 'antd'
 import { withProduct, selectProductWithKey } from '../redux'
 import { LinkConfirm, Loading } from '../../../components'
+import { config } from  '../../../config/env'
 
-const GITHUB_NAME = 'Weerapat1993'
+const GITHUB_NAME = config.REACT_APP_GITHUB_PROFILE
 
 const colorLanguage = (lang) => {
   switch(lang) {

@@ -1,12 +1,13 @@
 import React from 'react';
 import { ProductContainer } from '../../features'
 import { SEO } from '../../components'
+import { config } from  '../../config/env'
 
 const GithubPage = (props) => (
   <div>
     <SEO 
-      title='Github Profile Weerapat1933'
-      description='Github Repositories by Weerapat1993'
+      title={`Github Profile ${config.REACT_APP_GITHUB_PROFILE}`}
+      description={`Github Repositories by ${config.REACT_APP_GITHUB_PROFILE}`}
     />
     <ProductContainer {...props} />
   </div>

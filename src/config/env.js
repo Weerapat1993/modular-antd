@@ -6,6 +6,7 @@ const {
   REACT_APP_KEY,
   REACT_APP_ENDPOINT,
   REACT_APP_URL,
+  REACT_APP_GITHUB_PROFILE,
 } = process.env
 
 export const config = {
@@ -15,4 +16,5 @@ export const config = {
   REACT_APP_KEY,
   REACT_APP_ENDPOINT,
   REACT_APP_URL,
+  REACT_APP_GITHUB_PROFILE,
 }
