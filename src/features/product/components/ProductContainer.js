@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withSizes } from 'react-sizes'
 import { func, object, objectOf } from 'prop-types'
 import { List, Avatar, Icon } from 'antd'
-import moment from 'moment'
 import { withProduct, selectProductWithKey } from '../redux'
 import { LinkConfirm, Loading } from '../../../components'
 
@@ -135,7 +134,7 @@ class ProfilePage extends Component {
                 <List.Item.Meta
                   avatar={<Avatar src={item.owner.avatar_url} />}
                   title={<a onClick={() => this.confirmUrl(item.html_url)} target='_blank'>{item.name}</a>}
-                  description={moment(item.pushed_at).fromNow()}
+                  description={item.description}
                 />
                 <div>
                   {
